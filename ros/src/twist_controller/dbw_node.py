@@ -56,15 +56,7 @@ class DBWNode(object):
 
         # TODO: Create `Controller` object
         
-        # self.controller = Controller(
-        #             vehicle_mass = vehicle_mass,
-        #             decel_limit = decel_limit,
-        #             wheel_radius = wheel_radius,
-        #             wheel_base = wheel_base,
-        #             steer_ratio = steer_ratio,
-        #             max_lat_accel = max_lat_accel,
-        #             max_steer_angle = max_steer_angle)
-
+       
         # TODO: Subscribe to all the topics you need to
     	rospy.Subscriber('/vehicle/dbw_enabled', Bool, self.dbw_enabled_cb)
         rospy.Subscriber('/twist_cmd', TwistStamped, self.twist_cb)
