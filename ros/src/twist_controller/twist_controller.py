@@ -1,6 +1,6 @@
 from pid import PID
 from lowpass import LowPassFilter
-form yaw_controller import YawController
+from yaw_controller import YawController
 import rospy
 
 
@@ -44,6 +44,14 @@ class Controller(object):
 
         current_vel = self.vel_lpf.filt(current_vel)
 
+        #rospy.loginfo("Angular vel: {}".format(angular_vel))
+        #rospy.logwarn("Target vel: {0}".format(linear_vel))
+        #rospy.logwarn("Target Ang vel: {0}\n".format(angular_vel))
+        #rospy.logwarn("Current vel: {0}".format(current_vel))
+        #rospy.logwarn("Filtered vel: {0}".format(self.vel_lpf.get()))
+
+
+
         steering = self.yaw_controller.get_steering(linear_vel, angular_vel, current_vel)
 
         vel_error = linear_vel - current_vel
@@ -60,7 +68,7 @@ class Controller(object):
             throttle = 0
             brake = 400 #N*m - to hold the car in place if we are stopped at a lite - Acceleration - 1m/s^2
 
-        elif throttle < .1 and val_error < 0:
+        elif throttle < .1 and vel_error < 0:
             throttle = 0
             decel = max(vel_error, self.decel_limit)
             brake = abs(decel) * self.vehicle_mass * self.wheel_radius

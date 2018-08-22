@@ -77,7 +77,7 @@ class DBWNode(object):
         rate = rospy.Rate(50) # 50Hz
         while not rospy.is_shutdown():
 
-            if not None in (self.current_vel, self.curr_ang_vel, self.angular_vel):
+            if not None in (self.current_vel, self.linear_vel, self.angular_vel):
                 self.throttle, self.brake, self.steering = self.controller.control(self.current_vel,
                                                                     self.dbw_enabled,
                                                                     self.linear_vel,
@@ -117,4 +117,4 @@ class DBWNode(object):
 
 
 if __name__ == '__main__':
-DBWNode()
+    DBWNode()
