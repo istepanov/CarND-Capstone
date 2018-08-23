@@ -17,8 +17,8 @@ class Controller(object):
         kp = 0.3
         ki = 0.1
         kd = 0.
-        mn = 0. #Minimum throttle value
-        mx = 0.2 #Maximum throttle value
+        mn = 0.#0. #Minimum throttle value
+        mx = 0.2#0.2 #Maximum throttle value
 
         self.throttle_controller = PID(kp, ki, kd, mn, mx)
 
@@ -66,10 +66,13 @@ class Controller(object):
 
         if linear_vel == 0 and current_vel < 0.1:
             throttle = 0
-            brake = 400 #N*m - to hold the car in place if we are stopped at a lite - Acceleration - 1m/s^2
+            brake = 400 #N*m - to hold the car in place if we are stopped at a traffic light - Acceleration - 1m/s^2
 
-        elif throttle < .1 and vel_error < 0:
+        elif  throttle < 0.1 and vel_error < 0: #vel_error < 0: #throttle < .1 and
             throttle = 0
             decel = max(vel_error, self.decel_limit)
+            #decel = max(throttle, self.decel_limit)
+            #throttle = 0
             brake = abs(decel) * self.vehicle_mass * self.wheel_radius
+
         return throttle, brake, steering
