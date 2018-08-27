@@ -1,4 +1,6 @@
 import os
+import tarfile
+import urllib
 
 from styx_msgs.msg import TrafficLight
 
@@ -7,10 +9,11 @@ import tensorflow.contrib.slim as slim
 import tensorflow.contrib.slim.nets
 
 
-CHECKPOINT = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)),
-    'vgg_16/model',
-)
+CHECKPOINT_URL = 'https://s3-us-west-2.amazonaws.com/istepanov-ml/vgg_16_traffic_lights/model.tar.gz'
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+VGG_DIR = os.path.join(SCRIPT_DIR, 'vgg_16')
+CHECKPOINT = os.path.join(VGG_DIR, 'model')
 
 VGG_MEAN = [123.68, 116.78, 103.94]
 
@@ -19,6 +22,15 @@ CLASSES = [TrafficLight.GREEN, TrafficLight.RED, TrafficLight.YELLOW]
 
 class TLClassifier(object):
     def __init__(self):
+        if not os.path.isfile('{}.meta'.format(CHECKPOINT)):
+            print('Downloading the checkpoint ...')
+            tar_path = os.path.join(VGG_DIR, 'model.tar.gz')
+            urllib.urlretrieve(CHECKPOINT_URL, tar_path)
+            with tarfile.open(tar_path, "r:gz") as tar:
+                tar.extractall(VGG_DIR)
+            os.remove(tar_path)
+            print('Download is complete !')
+
         self.graph = tf.Graph()
         with self.graph.as_default():
             self.input_image = tf.placeholder(tf.float32, shape=(600, 800, 3))
