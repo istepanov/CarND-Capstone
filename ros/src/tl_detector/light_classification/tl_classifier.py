@@ -17,7 +17,12 @@ CHECKPOINT = os.path.join(VGG_DIR, 'model')
 
 VGG_MEAN = [123.68, 116.78, 103.94]
 
-CLASSES = [TrafficLight.GREEN, TrafficLight.RED, TrafficLight.YELLOW]
+CLASSES = [
+    TrafficLight.GREEN,
+    TrafficLight.UNKNOWN,
+    TrafficLight.RED,
+    TrafficLight.YELLOW,
+]
 
 
 class TLClassifier(object):
@@ -42,7 +47,7 @@ class TLClassifier(object):
 
             vgg = tf.contrib.slim.nets.vgg
             with slim.arg_scope(vgg.vgg_arg_scope()):
-                logits, _ = vgg.vgg_16(images, num_classes=3, is_training=False)
+                logits, _ = vgg.vgg_16(images, num_classes=4, is_training=False)
 
             saver = tf.train.Saver()
 
