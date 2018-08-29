@@ -1,6 +1,5 @@
 # Udacity capstone project dockerfile
 FROM ros:kinetic-robot
-LABEL maintainer="olala7846@gmail.com"
 
 # Install Dataspeed DBW https://goo.gl/KFSYi1 from binary
 # adding Dataspeed server to apt
