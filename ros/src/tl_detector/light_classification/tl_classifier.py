@@ -33,7 +33,7 @@ class TLClassifier(object):
             'labels': os.path.join(SCRIPT_DIR, 'labels.txt'),
             'backup': CHECKPOINT_FOLDER,
             'load': -1,
-            'threshold': 0.5,
+            'threshold': 0.7,
         }
         self.tfnet = TFNet(options)
 
