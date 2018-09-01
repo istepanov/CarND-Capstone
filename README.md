@@ -9,10 +9,10 @@ Team Members
 |Name   | email  |
 | ------ | ------|
 | Ilya Stepanov (**Team Lead**) | dev@ilyastepanov.com |
-|Chaitanya Rajasekhar | chaitanyar5atp@gmail.com |
+| Chaitanya Rajasekhar | chaitanyar5atp@gmail.com |
 | Isabella Ni | hpnhxxwn@gmail.com |
 | Deepak Zambre | deepak.zambre@gmail.com|
-| Aaditya Prakash | aadiprakash163@gmail.com |
+| Aaditya Prakash | phd1501201006@iiti.ac.in |
 
 
 ## Installation and Run Instructions
