@@ -14,11 +14,14 @@ import yaml
 from scipy.spatial import KDTree
 
 
-STATE_COUNT_THRESHOLD = 3
+STATE_COUNT_THRESHOLD = 2
+CLASSIFY_EVERY_NTH_IMAGE = 4 # due to performance issues, classify every Nth image
 
 class TLDetector(object):
     def __init__(self):
         rospy.init_node('tl_detector')
+
+        self.image_cb_calls_count = -1
 
         self.pose = None
         self.waypoints = None
@@ -76,6 +79,14 @@ class TLDetector(object):
         Args:
             msg (Image): image from car-mounted camera
         """
+
+        # due to performance issues, classify every Nth image
+        self.image_cb_calls_count += 1
+        if self.image_cb_calls_count % CLASSIFY_EVERY_NTH_IMAGE == 0:
+            self.image_cb_calls_count = 0
+        else:
+            return
+
         self.has_image = True
         self.camera_image = msg
         light_wp, state = self.process_traffic_lights()
